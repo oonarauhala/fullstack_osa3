@@ -22,11 +22,13 @@ app.get('/api/persons', (req, res) => {
 
 app.get('/info', (req, res) => {
     const date = new Date()
-    res.send(`
-    <p>Phonebook has ${persons.persons.length} people</p>
-    <br>
-    <p>${date}</p>
-    `)
+    Person.countDocuments({}).then(count => {
+        res.send(`
+                <p>Phonebook has ${count} people</p>
+                <br>
+                <p>${date}</p>
+            `)
+    })
 })
 
 app.get('/api/persons/:id', (req, res, next) => {
