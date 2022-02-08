@@ -4,7 +4,7 @@ const url = process.env.MONGODB_URI
 
 console.log('Connecting to', url)
 mongoose.connect(url)
-    .then(result => {
+    .then(() => {
         console.log('Connected to MongoDB')
     })
     .catch((error) => {
@@ -12,13 +12,12 @@ mongoose.connect(url)
     })
 
 const validator = (number) => {
-    console.log("number", number)
+    console.log('number', number)
     const regex = /^[0-9]{2,3}-[0-9]{6,10}$/
     const value = regex.test(number)
     return value
 }
 
-const customValidation = [validator, "Incorrect number, try format XXX-XXXXXX or XX-XXXXXX"]
 const personSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -28,7 +27,7 @@ const personSchema = new mongoose.Schema({
     number: String,
 })
 
-personSchema.path('number').validate(validator, "Incorrect number, try format XXX-XXXXXX or XX-XXXXXX")
+personSchema.path('number').validate(validator, 'Incorrect number, try format XXX-XXXXXX or XX-XXXXXX')
 
 personSchema.set('toJSON', {
     transform: (document, returnedObject) => {
